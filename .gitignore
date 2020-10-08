@@ -1,6 +1,6 @@
 # Serverless
 .serverless
-.env
+# .env
 tmp
 .coveralls.yml
 
