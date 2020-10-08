@@ -1,0 +1,27 @@
+{
+  "name": "rappi-payless-conciliation-sample-build-csv",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "test": "node_modules/.bin/jest",
+    "lint": "node_modules/.bin/eslint **/*.js --ignore-pattern node_modules/"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "5.16.0",
+    "eslint-config-airbnb-base": "13.1.0",
+    "eslint-plugin-import": "2.18.0",
+    "jest": "24.7.1"
+  },
+  "dependencies": {
+    "@google-cloud/storage": "^5.3.0",
+    "axios": "^0.20.0",
+    "dotenv": "^8.2.0",
+    "ftp": "^0.3.10",
+    "lodash": "^4.17.20",
+    "moment": "^2.29.0",
+    "moment-timezone": "^0.5.31",
+    "qs": "^6.9.4"
+  }
+}
