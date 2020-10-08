@@ -79,6 +79,3 @@ const handler = async () => {
 }
 
 module.exports = { 'rappi-payless-conciliation': handler }
-
-// Debug
-handler()
