@@ -3,7 +3,7 @@ const path = require('path')
 
 require('dotenv').config({ path: path.resolve(__dirname, './.env') })
 
-const fileSchema = require('./file-schema')
+const config = require('./config')
 
 const { signIn, fetchPayments } = require('./rappi-requests')
 const { processRowSchema, processHeaderSchema, defineSearchDates } = require('./utils')
@@ -22,7 +22,7 @@ const handler = async () => {
     fieldSeparator: separator = ',',
     fileHeader = null,
     fileRows,
-  } = fileSchema
+  } = config
   const {
     labelProperties: labelFileHeaders = false,
     schema: headerSchema,
@@ -34,7 +34,7 @@ const handler = async () => {
 
   const { startDate, endDate } = configStartDate && configEndDate
     ? { startDate: configStartDate, endDate: configEndDate }
-    : defineSearchDates(fileSchema)
+    : defineSearchDates(config)
   if (!startDate || !endDate) return
 
   const transactionData = await fetchPayments({ accessToken, startDate, endDate })
