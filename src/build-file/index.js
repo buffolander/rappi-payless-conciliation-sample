@@ -32,12 +32,16 @@ const handler = async () => {
     schema: rowSchema,
   } = fileRows || {}
 
+  // Setting query dates
   const { startDate, endDate } = configStartDate && configEndDate
     ? { startDate: configStartDate, endDate: configEndDate }
     : defineSearchDates(config)
   if (!startDate || !endDate) return
 
+  // Extract
   const transactionData = await fetchPayments({ accessToken, startDate, endDate })
+
+  // Transform
   const fileRowsData = transactionData.map(row => (
     processRowSchema(rowSchema, row, defaultData).join(separator)
   )).join('\n')
@@ -56,6 +60,7 @@ const handler = async () => {
   const fileBody = `${fileHeaders}${fileHeaderData}${columnHeaders}${fileRowsData}`
   const filePath = `${targetDirectory}/${fileName}${extension}`
 
+  // Load
   const {
     SFTP_HOST,
     SFTP_PORT = 22,
