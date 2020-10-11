@@ -1,7 +1,8 @@
-const FTP = require('ftp')
 const path = require('path')
 
 require('dotenv').config({ path: path.resolve(__dirname, './.env') })
+
+const ClientSFTP = require('ssh2-sftp-client')
 
 const config = require('./config')
 
@@ -16,7 +17,7 @@ const handler = async () => {
     startDate: configStartDate,
     endDate: configEndDate,
     fileName,
-    targetDirectory = '/',
+    targetDirectory = '',
     extension = 'csv',
     defaultUnavailableData: defaultData = '',
     fieldSeparator: separator = ',',
@@ -58,29 +59,30 @@ const handler = async () => {
     : headerSchema.map(item => item.name).join(separator).concat('\n')
 
   const fileBody = `${fileHeaders}${fileHeaderData}${columnHeaders}${fileRowsData}`
-  const filePath = `${targetDirectory}/${fileName}${extension}`
+  const filePath = `${targetDirectory}/${fileName}.${extension}`
 
   // Load
+  const sftp = new ClientSFTP()
   const {
     SFTP_HOST,
     SFTP_PORT = 22,
     SFTP_USER,
     SFTP_PASSWORD,
   } = process.env
-  const ftpClient = new FTP()
-  ftpClient
-    .on('ready', () => {
-      ftpClient.put(Buffer.from(fileBody, 'utf-8'), filePath, (err) => {
-        if (err) throw err
-        ftpClient.end()
-      })
+  try {
+    await sftp.connect({
+      host: SFTP_HOST,
+      port: Number(SFTP_PORT),
+      username: SFTP_USER,
+      password: SFTP_PASSWORD,
+      algorithms: { cipher: ['aes256-cbc'] },
     })
-  ftpClient.connect({
-    host: SFTP_HOST,
-    port: SFTP_PORT,
-    user: SFTP_USER,
-    password: SFTP_PASSWORD,
-  })
+    const res = await sftp.put(Buffer.from(fileBody, 'utf-8'), filePath)
+    console.info(res)
+    return sftp.end()
+  } catch (err) {
+    return console.error(err)
+  }
 }
 
 module.exports = { 'rappi-payless-conciliation': handler }

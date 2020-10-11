@@ -18,10 +18,10 @@
     "@google-cloud/storage": "^5.3.0",
     "axios": "^0.20.0",
     "dotenv": "^8.2.0",
-    "ftp": "^0.3.10",
     "lodash": "^4.17.20",
     "moment": "^2.29.0",
     "moment-timezone": "^0.5.31",
-    "qs": "^6.9.4"
+    "qs": "^6.9.4",
+    "ssh2-sftp-client": "^5.3.1"
   }
 }
