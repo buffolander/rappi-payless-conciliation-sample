@@ -6,13 +6,15 @@ const {
   sumRecords,
 } = require('./utils')
 
+const timezone = 'America/Bogota'
+
 module.exports = {
   frequency: 'daily', // enum: daily, weekly, monthly
   // * daily * fetches data from the previous day from 00:00:00 to 23:59:59
   // * weekly * fetches data from the previous full week, from MON to SUN
   // * monthly * fetches data from the previous full month
   scheduledTime: '02', // accepts the time in format 'HH'
-  timezone: 'America/Bogota',
+  timezone,
   // dayOfWeek applies only when frequency = weekly // enum: MON, TUE, WED, THU, FRI, SAT, SUN
   // dayOfWeek: 'MON',
   // dayOfMonth applies only when frequency = monthly // accepts the date in format 'DD'
@@ -54,14 +56,14 @@ module.exports = {
       mapsTo: 'created_at',
       transform: {
         lambda: formatDate,
-        options: { dateFormat: 'YYYYMMDD' },
+        options: { dateFormat: 'YYYYMMDD', timezone },
       },
     }, {
       name: 'hora',
       mapsTo: 'created_at',
       transform: {
         lambda: formatDate,
-        options: { dateFormat: 'HHmmss' },
+        options: { dateFormat: 'HHmmss', timezone },
       },
     }, {
       name: 'medio_de_pago',

@@ -4,7 +4,12 @@ const empty = require('lodash/isEmpty')
 const pick = require('lodash/pick')
 const m = require('moment-timezone')
 
-module.exports.formatDate = (value, { dateFormat }) => (m(value).format(dateFormat))
+module.exports.formatDate = (value, {
+  dateFormat,
+  timezone = null,
+}) => (timezone
+  ? m.tz(value, timezone).format(dateFormat)
+  : m(value).format(dateFormat))
 
 module.exports.mapEnums = (value, { enums = {} }) => (enums[value] || null)
 
