@@ -10,7 +10,7 @@ It's configurable enough to allow...
 
 3. ... loading the data to your FTP server.
 
-## Setting up your `.env` file
+## Setting up your `env` file
 
 The `.env` file located in `/src/build-file/.env`, is your single source for static configurations.
 
@@ -50,7 +50,7 @@ It's also possible to query transactions based custom dates. It enables the scri
 
 `frequency: daily` no additional properties required.
 
-`frequency: weekly` additional properties: `dayOfWeek` (string); it accepts as values: MON, TUE, WED, THU, FRI, SAT, SUN.
+`frequency: weekly` additional properties: `dayOfWeek` (string); enum: MON, TUE, WED, THU, FRI, SAT, SUN.
 
 `frequency: monthly` additional properties: `dayOfMonth` (string); accepts the date in format 'DD'.
 
