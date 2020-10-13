@@ -40,33 +40,33 @@ Transactions can be queried in a daily, weekly or monthly basis. Your frequency 
 
 It's also possible to query transactions based custom dates. It enables the script to establish the initial and final dates sent on the http request to Rappi.
 
-IMPORTANT!
+**IMPORTANT!**
 
-(1) Whatever the chosen frequency, `timezone` is always a required property. It allows transactions' timestamps to be adjusted to you local time.
+1. Whatever the chosen frequency, `timezone` is always a required property. It allows transactions' timestamps to be adjusted to you local time.
 
-(2) Whenever the `startDate` and `endDate` properties are configured, the script will perform a custom query and all other time frame properties in `config.js` will be ignored.
+2. Whenever the `startDate` and `endDate` properties are configured, the script will perform a custom query and all other time frame properties in `config.js` will be ignored.
 
-(3) If `frequency` is declared (whatever the value it holds), you must also specify `scheduledTime`. This property tells the script the hour it should be executed.
+3. If `frequency` is declared (whatever the value it holds), you must also specify `scheduledTime`. This property tells the script the hour it should be executed.
 
-(`frequency: daily`) no additional properties required.
+`frequency: daily` no additional properties required.
 
-(`frequency: weekly`) additional properties: `dayOfWeek` (string); it accepts as values: MON, TUE, WED, THU, FRI, SAT, SUN.
+`frequency: weekly` additional properties: `dayOfWeek` (string); it accepts as values: MON, TUE, WED, THU, FRI, SAT, SUN.
 
-(`frequency: monthly`) additional properties: `dayOfMonth` (string); accepts the date in format 'DD'.
+`frequency: monthly` additional properties: `dayOfMonth` (string); accepts the date in format 'DD'.
 
 ### **Your file conventions**
 
 File conventions are properties that allow you to define:
 
-(1) The file name mask. Property `fileName` (function);
+1. The file name mask. Property `fileName` (function);
 
-(2) The target directory in your server. Property `targetDirectory` (string);
+2. The target directory in your server. Property `targetDirectory` (string);
 
-(3) The extension applied to the file. Property `extension` (string);
+3. The extension applied to the file. Property `extension` (string);
 
-(4) The default value for unavailable data. Property: `defaultUnavailableData` (string | number);
+4. The default value for unavailable data. Property: `defaultUnavailableData` (string | number);
 
-(5) The character used for separating columns. Property: `fieldSeparator` (string).
+5. The character used for separating columns. Property: `fieldSeparator` (string).
 
 ### **Transformation functions**
 
