@@ -59,7 +59,7 @@ const handler = async () => {
     : headerSchema.map(item => item.name).join(separator).concat('\n')
 
   const fileBody = `${fileHeaders}${fileHeaderData}${columnHeaders}${fileRowsData}`
-  const filePath = `${targetDirectory}/${fileName}.${extension}`
+  const filePath = `${targetDirectory}/${fileName()}.${extension}`
 
   // Load
   const sftp = new ClientSFTP()

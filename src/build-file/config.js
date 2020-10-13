@@ -23,8 +23,8 @@ module.exports = {
   // use it when you need to generate data for specific dates
   // startDate: '2020-09-21',
   // endDate: '2020-09-27',
-  fileName: 'Rappi'.concat(formatDate(Date.now(), { dateFormat: 'YYYYMMDD' })),
-  targetDirectory: '/upload',
+  fileName: () => ('Rappi'.concat(formatDate(Date.now(), { dateFormat: 'YYYYMMDD' }))),
+  targetDirectory: '/AutorizadoresNoPOS Entrada',
   extension: 'txt',
   defaultUnavailableData: '0',
   fieldSeparator: '|',
