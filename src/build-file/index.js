@@ -7,7 +7,7 @@ const ClientSFTP = require('ssh2-sftp-client')
 const config = require('./config')
 
 const { signIn, fetchPayments } = require('./rappi-requests')
-const { processRowSchema, processHeaderSchema, defineSearchDates } = require('./utils')
+const { processBodySchema, processHeaderSchema, defineSearchDates } = require('./utils')
 
 const handler = async () => {
   const accessToken = await signIn()
@@ -22,7 +22,7 @@ const handler = async () => {
     defaultUnavailableData: defaultData = '',
     fieldSeparator: separator = ',',
     fileHeader = null,
-    fileRows,
+    fileColumns,
   } = config
   const {
     labelProperties: labelFileHeaders = false,
@@ -30,8 +30,8 @@ const handler = async () => {
   } = fileHeader || {}
   const {
     labelProperties: labelColumnHeaders = false,
-    schema: rowSchema,
-  } = fileRows || {}
+    schema: columnsSchema,
+  } = fileColumns || {}
 
   // Setting query dates
   const { startDate, endDate } = configStartDate && configEndDate
@@ -43,22 +43,22 @@ const handler = async () => {
   const transactionData = await fetchPayments({ accessToken, startDate, endDate })
 
   // Transform
-  const fileRowsData = transactionData.map(row => (
-    processRowSchema(rowSchema, row, defaultData).join(separator)
+  const fileRows = transactionData.map(row => (
+    processBodySchema(columnsSchema, row, defaultData).join(separator)
   )).join('\n')
   const columnHeaders = !labelColumnHeaders
     ? ''
-    : rowSchema.map(item => item.name).join(separator).concat('\n')
+    : columnsSchema.map(item => item.name).join(separator).concat('\n')
 
   const fileHeaderData = !headerSchema
     ? ''
-    : processHeaderSchema(headerSchema, fileRowsData, defaultData, separator)
+    : processHeaderSchema(headerSchema, fileRows, defaultData, separator)
       .join(separator).concat('\n')
   const fileHeaders = !labelFileHeaders
     ? ''
     : headerSchema.map(item => item.name).join(separator).concat('\n')
 
-  const fileBody = `${fileHeaders}${fileHeaderData}${columnHeaders}${fileRowsData}`
+  const fileBody = `${fileHeaders}${fileHeaderData}${columnHeaders}${fileRows}`
   const filePath = `${targetDirectory}/${fileName()}.${extension}`
 
   // Load

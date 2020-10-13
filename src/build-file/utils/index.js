@@ -27,14 +27,17 @@ module.exports.countRecords = (value) => {
   return empty(records[0]) ? 0 : records.length
 }
 
-module.exports.sumRecords = (value, { index, separator }) => {
+module.exports.sumRecords = (value, {
+  index,
+  separator,
+}) => {
   const records = value.split('\n')
   return empty(records[0]) ? 0 : records.reduce(
     (acc, cur) => (acc + Number(cur.split(separator)[index])), 0,
   )
 }
 
-module.exports.processRowSchema = (schema, data, defaultData) => (
+module.exports.processBodySchema = (schema, data, defaultData) => (
   schema.reduce((acc, cur) => (
     [...acc, cur.default
       ? cur.default

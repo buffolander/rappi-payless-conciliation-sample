@@ -49,7 +49,7 @@ module.exports = {
       },
     }],
   },
-  fileRows: {
+  fileColumns: {
     labelProperties: false,
     schema: [{
       name: 'fecha',
